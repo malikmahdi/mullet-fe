@@ -54,9 +54,10 @@ export default function LoginPage() {
     >
       <div className="flex">
         <div className="flex justify-center h-screen flex-col w-full mx-24">
-          <h1 className="text-start text-9xl font-extrabold text-[#A62800]">
+          {/* <h1 className="text-start text-9xl font-extrabold text-[#A62800]">
             $Mullet
-          </h1>
+          </h1> */}
+          <img src="/logo.png" alt="" />
           <h5 className="text-2xl">
             Multiple Wallet is an application
             <br />
@@ -109,7 +110,7 @@ export default function LoginPage() {
 
             <CardFooter className="flex flex-col">
               {/* <Button variant="outline">Cancel</Button> */}
-              <Button className="w-full my-3">Login</Button>
+              <Button className="w-full my-3 hover:bg-[#A62921]">Login</Button>
             </CardFooter>
           </Card>
         </div>

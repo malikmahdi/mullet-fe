@@ -19,10 +19,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { IUserRegister } from "../types/auth";
+import { RegisterApi } from "@/lib/call/auth";
 
 export default function RegisterPage() {
-  const [formData, setFormData] = React.useState({
-    fullname: "",
+  const router = useRouter();
+  const [formData, setFormData] = React.useState<IUserRegister>({
+    username: "",
     email: "",
     password: "",
   });
@@ -32,15 +36,17 @@ export default function RegisterPage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormData(formData);
-  };
+  const handleSubmit = async (e: React.MouseEvent): Promise<void> => {
+    try {
+      e.preventDefault();
 
-  React.useEffect(() => {
-    handleChange;
-    handleSubmit;
-  }, []);
+      await RegisterApi(formData);
+      router.push("login");
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 
   return (
     <div
@@ -77,13 +83,14 @@ export default function RegisterPage() {
               <CardTitle className="text-center my-5">SIGN UP</CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit}>
+              <form>
                 <div className="grid w-full items-center gap-4">
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="fullname">Fullname</Label>
+                    <Label htmlFor="username">Username</Label>
                     <Input
-                      id="fullname"
+                      id="username"
                       type="text"
+                      name="username"
                       placeholder="John Doe"
                       onChange={handleChange}
                     />
@@ -93,6 +100,7 @@ export default function RegisterPage() {
                     <Input
                       id="email"
                       type="email"
+                      name="email"
                       placeholder="johndoe@gmail.com"
                       onChange={handleChange}
                     />
@@ -102,23 +110,28 @@ export default function RegisterPage() {
                     <Input
                       id="password"
                       type="password"
+                      name="password"
                       placeholder="******************"
                       onChange={handleChange}
                     />
                   </div>
                 </div>
+                <small className="text-blue-500">
+                  If you don't have an account yet, please{" "}
+                  <Link href={"/login"}>login</Link>
+                </small>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  className="w-full mt-5 hover:bg-[#A62921]"
+                >
+                  Submit
+                </Button>
               </form>
-              <small className="text-blue-500">
-                If you don't have an account yet, please{" "}
-                <Link href={"/login"}>login</Link>
-              </small>
             </CardContent>
 
             <CardFooter className="flex flex-col">
               {/* <Button variant="outline">Cancel</Button> */}
-              <Button type="submit" className="w-full">
-                Submit
-              </Button>
             </CardFooter>
           </Card>
         </div>
