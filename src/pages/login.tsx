@@ -19,28 +19,51 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "../store/index";
+import { LoginAsync, getProfileAsync } from "../store/async/auth";
+import { useRouter } from "next/router";
 
 export default function LoginPage() {
-  const [formData, setFormData] = React.useState({
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { token } = useAppSelector((state) => state.auth);
+  const [formData, setFormData] = React.useState<{
+    email: string;
+    password: string;
+  }>({
     email: "",
     password: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormData(formData);
+    try {
+      const token = (await dispatch(LoginAsync(formData))).payload;
+      console.log("token form", token);
+      await dispatch(getProfileAsync(token));
+
+      router.push("dashboard");
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 
-  React.useEffect(() => {
-    handleChange;
-    handleSubmit;
-  }, []);
-  console.log(formData);
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setFormData(formData);
+  // };
+
+  // React.useEffect(() => {
+  //   handleChange;
+  //   handleSubmit;
+  // }, []);
+  // console.log(formData);
 
   return (
     <div
@@ -78,7 +101,7 @@ export default function LoginPage() {
               <CardTitle className="text-center my-5">SIGN IN</CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleLogin}>
                 <div className="grid w-full items-center gap-4">
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="email">Email</Label>
@@ -87,7 +110,10 @@ export default function LoginPage() {
                       type="email"
                       name="email"
                       placeholder="johndoe@gmail.com"
-                      onChange={handleChange}
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
@@ -97,10 +123,19 @@ export default function LoginPage() {
                       type="password"
                       name="password"
                       placeholder="******************"
-                      onChange={handleChange}
+                      value={formData.password}
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
                     />
                   </div>
                 </div>
+                <Button
+                  type="submit"
+                  className="w-full my-3 hover:bg-[#A62921]"
+                >
+                  Login
+                </Button>
               </form>
               <small className="text-blue-500">
                 If you don't have an account yet, please{" "}
@@ -108,10 +143,9 @@ export default function LoginPage() {
               </small>
             </CardContent>
 
-            <CardFooter className="flex flex-col">
-              {/* <Button variant="outline">Cancel</Button> */}
-              <Button className="w-full my-3 hover:bg-[#A62921]">Login</Button>
-            </CardFooter>
+            {/* <CardFooter className="flex flex-col">
+              <Button variant="outline">Cancel</Button>
+            </CardFooter> */}
           </Card>
         </div>
       </div>

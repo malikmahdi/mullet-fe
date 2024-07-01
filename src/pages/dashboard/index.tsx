@@ -1,6 +1,11 @@
 import CardOverview from "@/components/manual/cardOverview";
 import Navbar from "@/components/manual/navbar";
 import Link from "next/link";
+import { getProfile } from "../../lib/call/profile";
+import { useAppDispatch, useAppSelector } from "../../store/index";
+import { SET_LOGIN } from "../../store/slice/authSlice";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const dataOverview = [
   {
@@ -22,6 +27,28 @@ const dataOverview = [
 ];
 
 export default function Dashboard() {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const auth = useAppSelector((state) => state.auth);
+  const checkToken = async () => {
+    try {
+      const token = await localStorage.getItem("token");
+      if (!token) {
+        return router.push("../login");
+      }
+      const res = await getProfile(token);
+      dispatch(SET_LOGIN({ user: res.data.data, token }));
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    checkToken();
+  }, []);
+  console.log("data auth", auth);
+
   return (
     <>
       <Navbar />

@@ -48,7 +48,7 @@ export default function Transactions() {
             {/* Overview area */}
             <h3 className="text-3xl font-extrabold text-[#324C5B] mb-3"></h3>
             <div className="">
-              <Button className="w-10">Add Transactions</Button>
+              {/* <Button className="w-10">Add Transactions</Button> */}
               <ModalAdd />
             </div>
             <div className="flex gap-4">
