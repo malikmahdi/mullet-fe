@@ -32,7 +32,7 @@ const ModalAdd = () => {
   return (
     <>
       <Dialog>
-        <DialogTrigger className="btn btn-primary bg-slate-700 hover:bg-slate-800 text-white px-5 py-2 rounded-md">
+        <DialogTrigger className="btn btn-primary bg-slate-700 hover:bg-slate-800 text-white px-5 py-2 mb-10 rounded-md">
           + Transactions
         </DialogTrigger>
         <DialogContent>
@@ -45,30 +45,66 @@ const ModalAdd = () => {
               <form>
                 <div className="grid w-full items-center gap-4">
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Name of your project" />
-                  </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="framework">Framework</Label>
+                    <Label htmlFor="framework">Category</Label>
                     <Select>
                       <SelectTrigger id="framework">
                         <SelectValue placeholder="Select" />
                       </SelectTrigger>
                       <SelectContent position="popper">
-                        <SelectItem value="next">Next.js</SelectItem>
-                        <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                        <SelectItem value="astro">Astro</SelectItem>
-                        <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                        <SelectItem value="eatdrink" id="eatdrink">
+                          Eat & Drink
+                        </SelectItem>
+                        <SelectItem value="fashion" id="fashion">
+                          Fashion
+                        </SelectItem>
+                        <SelectItem value="shoping" id="shoping">
+                          Shoping
+                        </SelectItem>
+                        <SelectItem value="travel" id="travel">
+                          Travel
+                        </SelectItem>
+                        <SelectItem value="beauty" id="beauty">
+                          Beauty
+                        </SelectItem>
+                        <SelectItem value="sporthobbies" id="sporthobbies">
+                          Sport & Hobbies
+                        </SelectItem>
                       </SelectContent>
                     </Select>
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="framework">Label</Label>
+                    <Select>
+                      <SelectTrigger id="framework">
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="lunch" id="lunch">
+                          Lunch
+                        </SelectItem>
+                        <SelectItem value="want" id="want">
+                          Want
+                        </SelectItem>
+                        <SelectItem value="musthave" id="musthave">
+                          Must Haves
+                        </SelectItem>
+                        <SelectItem value="vacation" id="vacation">
+                          Vacation
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="name">Amout</Label>
+                    <Input id="name" placeholder="1.000.000" />
+                  </div>
+
+                  <div>
+                    <Button className="w-full">Add</Button>
                   </div>
                 </div>
               </form>
             </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button variant="outline">Cancel</Button>
-              <Button>Deploy</Button>
-            </CardFooter>
           </Card>
 
           {/* <DialogHeader>

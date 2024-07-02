@@ -1,8 +1,66 @@
 import CardOverview from "@/components/manual/cardOverview";
 import Navbar from "@/components/manual/navbar";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import Link from "next/link";
 import ModalAdd from "./modalTransactions";
+import { SET_LOGOUT } from "@/store/slice/authSlice";
+import { useRouter } from "next/router";
+import { useAppDispatch } from "@/store";
+
+const invoices = [
+  {
+    invoice: "INV001",
+    paymentStatus: "Paid",
+    totalAmount: "$250.00",
+    category: "Shoping",
+  },
+  {
+    invoice: "INV002",
+    paymentStatus: "Pending",
+    totalAmount: "$150.00",
+    category: "Shoping",
+  },
+  {
+    invoice: "INV003",
+    paymentStatus: "Unpaid",
+    totalAmount: "$350.00",
+    category: "Beauty",
+  },
+  {
+    invoice: "INV004",
+    paymentStatus: "Paid",
+    totalAmount: "$450.00",
+    category: "Sport & Hobbies",
+  },
+  {
+    invoice: "INV005",
+    paymentStatus: "Paid",
+    totalAmount: "$550.00",
+    category: "Travel",
+  },
+  {
+    invoice: "INV006",
+    paymentStatus: "Pending",
+    totalAmount: "$200.00",
+    category: "Sport & Hobbies",
+  },
+  {
+    invoice: "INV007",
+    paymentStatus: "Unpaid",
+    totalAmount: "$300.00",
+    category: "Beauty",
+  },
+];
 
 const dataTransactions = [
   {
@@ -24,22 +82,44 @@ const dataTransactions = [
 ];
 
 export default function Transactions() {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
   return (
     <>
       <Navbar />
       <div className="flex bg-[#f4f7f4]">
         {/* Navigasi */}
-        <div className="bg-slate-300 w-1/5 flex flex-col">
-          <Link href="../dashboard">
-            <h3 className="text-2xl hover:bg-slate-500 text-white font-bold px-4 py-2 ">
-              Dashboard
-            </h3>
-          </Link>
-          <Link href="#">
-            <h3 className="text-2xl  bg-slate-400  hover:bg-slate-500 text-white font-bold px-4 py-2 ">
-              Transactions
-            </h3>
-          </Link>
+        <div className="bg-slate-300 w-1/5 flex flex-col justify-between">
+          <div>
+            <Link href="../dashboard">
+              <h3 className="text-2xl hover:bg-slate-500 text-white font-bold px-4 py-2 ">
+                Dashboard
+              </h3>
+            </Link>
+            <Link href="#">
+              <h3 className="text-2xl  bg-slate-400  hover:bg-slate-500 text-white font-bold px-4 py-2 ">
+                Transactions
+              </h3>
+            </Link>
+            <Link href="profile">
+              <h3 className="text-2xl  hover:bg-slate-500 text-white font-bold px-4 py-2 ">
+                Profile
+              </h3>
+            </Link>
+          </div>
+
+          <div className="mb-32">
+            <Button
+              className="text-white"
+              onClick={() => {
+                dispatch(SET_LOGOUT());
+                router.push("login");
+              }}
+            >
+              Logout
+            </Button>
+          </div>
         </div>
         {/*  */}
         {/*  */}
@@ -57,8 +137,45 @@ export default function Transactions() {
               ))}
             </div>
             {/* Overview area */}
+
+            {/* Table */}
+            <div className="mt-10">
+              <Table>
+                <TableCaption>A list of your recent invoices.</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Invoice</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Method</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {invoices.map((invoice) => (
+                    <TableRow key={invoice.invoice}>
+                      <TableCell className="font-medium">
+                        {invoice.invoice}
+                      </TableCell>
+                      <TableCell>{invoice.paymentStatus}</TableCell>
+                      <TableCell>{invoice.category}</TableCell>
+                      <TableCell className="text-right">
+                        {invoice.totalAmount}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TableCell colSpan={3}>Total</TableCell>
+                    <TableCell className="text-right">$2,500.00</TableCell>
+                  </TableRow>
+                </TableFooter>
+              </Table>
+            </div>
           </div>
         </div>
+
+        {/*  */}
       </div>
     </>
   );

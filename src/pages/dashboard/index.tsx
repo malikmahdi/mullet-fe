@@ -3,9 +3,10 @@ import Navbar from "@/components/manual/navbar";
 import Link from "next/link";
 import { getProfile } from "../../lib/call/profile";
 import { useAppDispatch, useAppSelector } from "../../store/index";
-import { SET_LOGIN } from "../../store/slice/authSlice";
+import { SET_LOGIN, SET_LOGOUT } from "../../store/slice/authSlice";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 const dataOverview = [
   {
@@ -54,17 +55,36 @@ export default function Dashboard() {
       <Navbar />
       <div className="flex bg-[#f4f7f4]">
         {/* Navigasi */}
-        <div className="bg-slate-300 w-1/5 flex flex-col">
-          <Link href="#">
-            <h3 className="text-2xl bg-slate-400 hover:bg-slate-500 text-white font-bold px-4 py-2 ">
-              Dashboard
-            </h3>
-          </Link>
-          <Link href="dashboard/transactions">
-            <h3 className="text-2xl  hover:bg-slate-500 text-white font-bold px-4 py-2 ">
-              Transactions
-            </h3>
-          </Link>
+        <div className="bg-slate-300 w-1/5 flex flex-col justify-between">
+          <div>
+            <Link href="#">
+              <h3 className="text-2xl bg-slate-400 hover:bg-slate-500 text-white font-bold px-4 py-2 ">
+                Dashboard
+              </h3>
+            </Link>
+            <Link href="dashboard/transactions">
+              <h3 className="text-2xl  hover:bg-slate-500 text-white font-bold px-4 py-2 ">
+                Transactions
+              </h3>
+            </Link>
+            <Link href="dashboard/profile">
+              <h3 className="text-2xl  hover:bg-slate-500 text-white font-bold px-4 py-2 ">
+                Profile
+              </h3>
+            </Link>
+          </div>
+
+          <div className="mb-32">
+            <Button
+              className="text-white"
+              onClick={() => {
+                dispatch(SET_LOGOUT());
+                router.push("login");
+              }}
+            >
+              Logout
+            </Button>
+          </div>
         </div>
         {/*  */}
         {/*  */}
