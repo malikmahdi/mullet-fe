@@ -28,7 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const ModalAdd = () => {
+const ModalTransactions = () => {
   return (
     <>
       <Dialog>
@@ -119,4 +119,4 @@ const ModalAdd = () => {
     </>
   );
 };
-export default ModalAdd;
+export default ModalTransactions;

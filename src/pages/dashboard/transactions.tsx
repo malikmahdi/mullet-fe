@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import ModalAdd from "./modalTransactions";
+import ModalTransactions from "./modalTransactions";
 import { SET_LOGOUT } from "@/store/slice/authSlice";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "@/store";
@@ -98,7 +98,7 @@ export default function Transactions() {
               </h3>
             </Link>
             <Link href="#">
-              <h3 className="text-2xl  bg-slate-400  hover:bg-slate-500 text-white font-bold px-4 py-2 ">
+              <h3 className="text-2xl bg-[#F4F7F4] hover:bg-slate-500 text-slate-400 hover:text-slate-300 font-bold px-4 py-2 ">
                 Transactions
               </h3>
             </Link>
@@ -129,7 +129,7 @@ export default function Transactions() {
             <h3 className="text-3xl font-extrabold text-[#324C5B] mb-3"></h3>
             <div className="">
               {/* <Button className="w-10">Add Transactions</Button> */}
-              <ModalAdd />
+              <ModalTransactions />
             </div>
             <div className="flex gap-4">
               {dataTransactions.map((data) => (

@@ -37,7 +37,7 @@ const Profile = () => {
               </h3>
             </Link>
             <Link href="dashboard/transactions">
-              <h3 className="text-2xl  bg-slate-400 hover:bg-slate-500 text-white font-bold px-4 py-2 ">
+              <h3 className="text-2xl bg-[#F4F7F4] hover:bg-slate-500 text-slate-400 hover:text-slate-300 font-bold px-4 py-2 ">
                 Profile
               </h3>
             </Link>

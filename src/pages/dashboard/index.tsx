@@ -7,6 +7,26 @@ import { SET_LOGIN, SET_LOGOUT } from "../../store/slice/authSlice";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import ModalCreateWallet from "./modalCreateWallet";
+
+const dataWallet = [
+  {
+    name: "First Wallet",
+    nominal: "1.000.000",
+  },
+  {
+    name: "Second Wallet",
+    nominal: "2.000.000",
+  },
+];
 
 const dataOverview = [
   {
@@ -58,7 +78,7 @@ export default function Dashboard() {
         <div className="bg-slate-300 w-1/5 flex flex-col justify-between">
           <div>
             <Link href="#">
-              <h3 className="text-2xl bg-slate-400 hover:bg-slate-500 text-white font-bold px-4 py-2 ">
+              <h3 className="text-2xl bg-[#F4F7F4] hover:bg-slate-500 text-slate-400 hover:text-slate-300 font-bold px-4 py-2 ">
                 Dashboard
               </h3>
             </Link>
@@ -91,26 +111,47 @@ export default function Dashboard() {
         <div className=" w-4/5 h-screen px-7 pt-14">
           <div className="flex flex-col">
             {/* Wallet area */}
-            <h3 className="text-3xl font-extrabold text-[#324C5B] mb-3">
+            <h3 className="text-3xl font-extrabold text-[#324C5B] mb-10">
               Wallets
             </h3>
-            <div className="flex mb-16 items-center gap-10">
-              {/* Card */}
-              <div className="bg-white flex items-center w-72 h-32 shadow-sm rounded-lg cursor-pointer hover:shadow-lg">
-                <div className="h-full flex items-center px-3">
-                  <img src="/wallet.png" width={55} alt="" />
-                </div>
 
-                <div className="w-full h-full flex flex-col justify-center px-2">
-                  <h5 className="text-2xl text-[#324C5B] font-medium">
-                    Cash Wallet
-                  </h5>
-                  <h5 className="text-3xl text-[#cdbc25]">Rp.1.000.000</h5>
-                </div>
-              </div>
-              {/* Card */}
+            <div className="flex mb-16 items-center gap-10 h-32">
+              <Carousel className="w-full max-w-xs mx-10">
+                <CarouselContent>
+                  {dataWallet.map((wallet, index) => (
+                    <CarouselItem key={index}>
+                      <div>
+                        <Card className="bg-transparent border-none shadow-none">
+                          <CardContent className="flex aspect-square items-center justify-center">
+                            {/* Card */}
+                            <div className="bg-white flex mt-6 w-72 h-32 shadow-sm rounded-lg cursor-pointer hover:shadow-lg">
+                              <div className="h-full flex items-center px-3">
+                                <img src="/wallet.png" width={55} alt="" />
+                              </div>
 
+                              <div className="w-full h-full flex flex-col justify-center px-2">
+                                <h5 className="text-2xl text-[#324C5B] font-medium">
+                                  {wallet.name}
+                                </h5>
+                                <h5 className="text-3xl text-[#cdbc25]">
+                                  {wallet.nominal}
+                                </h5>
+                              </div>
+                            </div>
+                            {/* Card */}
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
               <div className="">
+                <div>
+                  <ModalCreateWallet />
+                </div>
                 <h4 className="text-5xl text-stone-700">
                   Reduce unnecessary expenses
                 </h4>
